@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 
 //Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
-import App from "./App";
+import App from "./src/App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

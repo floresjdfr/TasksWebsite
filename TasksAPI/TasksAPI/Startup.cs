@@ -34,7 +34,7 @@ namespace TasksAPI
             {
                 options.AddPolicy(name: AllowSpecifications, policy =>
                 {
-                    policy.WithOrigins("*").AllowAnyHeader();
+                    policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
                 });
             });
             services.Configure<TasksDatabaseSettings>(Configuration.GetSection(nameof(TasksDatabaseSettings)));

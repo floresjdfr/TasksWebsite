@@ -2,12 +2,16 @@ import { useContext, useState } from "react";
 import { Form, Button, Modal } from "react-bootstrap";
 import axios from "axios";
 import { TaskContext } from "../../Pages/Task";
+import { getTasks, postTask } from "../../api/tasksApi";
+import { GlobalContext } from "../../contexts/GlobalContext";
 
 function NewTask() {
   const [show, setShow] = useState(false);
   const [inputs, setInputs] = useState({});
 
   const [taskState, setTaskState] = useContext(TaskContext);
+  const { setShowToast, setToastHeader, setToastBody } =
+    useContext(GlobalContext);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -27,18 +31,16 @@ function NewTask() {
       taskState: "ACTIVE",
     };
 
-    axios
-      .post("https://localhost:44355/api/Task", newTask)
-      .then((res) => {
-        if (res.status !== 201) throw "Error getting the data";
-        axios
-          .get("https://localhost:44355/api/Task")
-          .then((res) => {
-            setTaskState(res.data);
-          })
-          .catch((error) => console.log(error));
-      })
-      .catch((error) => console.log(error));
+    postTask(newTask)
+      .then((_) => getTasks())
+      .then((res) => setTaskState(res.data))
+      .catch((_) => {
+        setToastHeader("Error");
+        setToastBody(
+          "An error ocurred while executing the request. Please try again"
+        );
+        setShowToast(true);
+      });
     handleClose();
   };
 
