@@ -1,30 +1,18 @@
-import { createContext, useState } from "react";
+import axios from "axios";
+import { createContext, useEffect, useState } from "react";
 import NewTask from "../components/task/NewTask";
 import TaskList from "../components/task/TaskList";
 
-const tasks = [
-  {
-    TaskId: "123455",
-    TaskDescription: "Task 1",
-    TaskDate: new Date().toDateString(),
-    TaskState: "ACTIVE",
-  },
-  {
-    TaskId: "123456",
-    TaskDescription: "Task 2",
-    TaskDate: new Date().toDateString(),
-    TaskState: "ACTIVE",
-  },
-  {
-    TaskId: "123457",
-    TaskDescription: "Task 3",
-    TaskDate: new Date().toDateString(),
-    TaskState: "ACTIVE",
-  },
-];
-
 function Task() {
-  const [taskState, setTaskState] = useState(tasks);
+  const [taskState, setTaskState] = useState([]);
+  useEffect(() => {
+    axios
+      .get("https://localhost:44355/api/Task")
+      .then((res) => {
+        setTaskState(res.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
   return (
     <TaskContext.Provider value={[taskState, setTaskState]}>
       <NewTask />

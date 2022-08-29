@@ -6,9 +6,9 @@ function TaskList() {
   const [taskState, setTaskState] = useContext(TaskContext);
 
   const tasksElement = taskState.map((task) => (
-    <div className="d-flex justify-content-between mb-4" key={task.TaskId}>
-      <span>{task.TaskDescription}</span>
-      <span>{task.TaskDate.toString()}</span>
+    <div className="d-flex justify-content-between mb-4" key={task.taskId}>
+      <span>{task.taskDescription}</span>
+      <span>{new Date(task.taskDate).toISOString().slice(0, 10)}</span>
       <Button variant="primary">Delete</Button>
     </div>
   ));

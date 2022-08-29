@@ -1,15 +1,46 @@
 import { useContext, useState } from "react";
-import { Form } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
+import { Form, Button, Modal } from "react-bootstrap";
+import axios from "axios";
 import { TaskContext } from "../../Pages/Task";
 
 function NewTask() {
   const [show, setShow] = useState(false);
+  const [inputs, setInputs] = useState({});
+
   const [taskState, setTaskState] = useContext(TaskContext);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleOnChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    inputs[name] = value;
+    setInputs(inputs);
+  };
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
+
+    const newTask = {
+      taskDescription: inputs.Description,
+      taskDate: inputs.Date,
+      taskState: "ACTIVE",
+    };
+
+    axios
+      .post("https://localhost:44355/api/Task", newTask)
+      .then((res) => {
+        if (res.status !== 201) throw "Error getting the data";
+        axios
+          .get("https://localhost:44355/api/Task")
+          .then((res) => {
+            setTaskState(res.data);
+          })
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+    handleClose();
+  };
 
   return (
     <div className="row">
@@ -19,7 +50,7 @@ function NewTask() {
         </Button>
 
         <Modal show={show} onHide={handleClose}>
-          <Form>
+          <Form onChange={handleOnChange} onSubmit={handleOnSubmit}>
             <Modal.Header closeButton>
               <Modal.Title>Modal heading</Modal.Title>
             </Modal.Header>

@@ -19,21 +19,30 @@ namespace TasksAPI
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+        readonly string AllowSpecifications = "_AllowSpecifications";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllowSpecifications, policy =>
+                {
+                    policy.WithOrigins("*").AllowAnyHeader();
+                });
+            });
             services.Configure<TasksDatabaseSettings>(Configuration.GetSection(nameof(TasksDatabaseSettings)));
             services.AddSingleton<IDatabaseSettings>(item => item.GetRequiredService<IOptions<TasksDatabaseSettings>>().Value);
             services.AddSingleton<TaskRepository>();
             services.AddControllers();
             services.AddSwaggerGen();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +62,8 @@ namespace TasksAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(AllowSpecifications);
 
             app.UseAuthorization();
 
