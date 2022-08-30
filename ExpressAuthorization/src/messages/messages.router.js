@@ -18,12 +18,12 @@ const messagesRouter = express.Router();
 
 // GET messages/
 
-messagesRouter.get("/public-message", (req, res) => {
+messagesRouter.get("/public", (req, res) => {
   const message = getPublicMessage();
   res.status(200).send(message);
 });
 
-messagesRouter.get("/protected-message", checkJwt, (req, res) => {
+messagesRouter.get("/protected", checkJwt, (req, res) => {
   const message = getProtectedMessage();
   res.status(200).send(message);
 });

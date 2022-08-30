@@ -1,7 +1,7 @@
 import axios from "axios";
 import { baseUrl } from "./baseApi";
 
-const taskUrl = baseUrl + "task/";
+const taskUrl = baseUrl + "/api/task/";
 
 export const getTasks = () => axios.get(taskUrl);
 export const postTask = (newTask) => axios.post(taskUrl, newTask);
