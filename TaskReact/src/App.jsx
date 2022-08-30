@@ -11,6 +11,7 @@ import Profile from "./Pages/Profile";
 import Loading from "./components/utils/Loading";
 import { useAuth0 } from "@auth0/auth0-react";
 import ProtectedRoute from "./auth/ProtectedRoute";
+import ExternalApi from "./pages/ExternalAPI";
 
 function App() {
   const { isLoading } = useAuth0();
@@ -36,6 +37,7 @@ function CustomRoutes() {
           path="/profile"
           element={<ProtectedRoute component={Profile} />}
         />
+        <Route path="/external-api" element={<ProtectedRoute component={ExternalApi}/>}/>
       </Routes>
     </div>
   );

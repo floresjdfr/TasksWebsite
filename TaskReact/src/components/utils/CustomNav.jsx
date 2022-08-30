@@ -13,6 +13,7 @@ function CustomNav() {
             <Nav.Link href="/">Tasks</Nav.Link>
             <Nav.Link href="/about">About</Nav.Link>
             <Nav.Link href="/profile">Profile</Nav.Link>
+            <Nav.Link href="/external-api">External API</Nav.Link>
           </Nav>
           <Nav className="ml-auto">
             <AuthenticationButton />
