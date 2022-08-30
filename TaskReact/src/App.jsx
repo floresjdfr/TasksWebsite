@@ -10,6 +10,7 @@ import Task from "./Pages/Task";
 import Profile from "./Pages/Profile";
 import Loading from "./components/utils/Loading";
 import { useAuth0 } from "@auth0/auth0-react";
+import ProtectedRoute from "./auth/ProtectedRoute";
 
 function App() {
   const { isLoading } = useAuth0();
@@ -31,7 +32,10 @@ function CustomRoutes() {
       <Routes>
         <Route path="/" element={<Task />} />
         <Route path="/about" element={<About />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={<ProtectedRoute component={Profile} />}
+        />
       </Routes>
     </div>
   );
