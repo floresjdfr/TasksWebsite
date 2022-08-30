@@ -1,7 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 import { Button } from "react-bootstrap";
 import { TaskContext } from "../../Pages/Task";
-import axios from "axios";
 import { deleteTask, getTasks } from "../../api/tasksApi";
 import { GlobalContext } from "../../contexts/GlobalContext";
 

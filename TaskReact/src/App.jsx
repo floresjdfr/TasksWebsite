@@ -1,34 +1,39 @@
 //React
 import React from "react";
-import { BrowserRouter as Router, Link, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CustomNav from "./components/utils/CustomNav";
 import CustomToast from "./components/utils/CustomToast";
-import { Auth0Provider } from "@auth0/auth0-react";
 
-import GlobalProvider, { GlobalContext } from "./contexts/GlobalContext";
+import GlobalProvider from "./contexts/GlobalContext";
 import About from "./Pages/About";
 import Task from "./Pages/Task";
-import ProfileInformation from "./Pages/Profile";
+import Profile from "./Pages/Profile";
+import Loading from "./components/utils/Loading";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
+  const { isLoading } = useAuth0();
+
   return (
-    <Router>
-      <Auth0Provider
-        domain="dev-x89v66tk.us.auth0.com"
-        clientId="WT7aAlguqhHjOyidU6PUAFt5tztJAWL5"
-        redirectUri={document.location.origin}
-      >
-        <GlobalProvider>
-          <CustomNav />
-          <CustomToast />
-          <Routes>
-            <Route path="/" element={<Task />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/profile" element={<ProfileInformation />} />
-          </Routes>
-        </GlobalProvider>
-      </Auth0Provider>
-    </Router>
+    <GlobalProvider>
+      <CustomNav />
+      <CustomToast />
+      <div className="container my-4">
+        {isLoading ? <Loading /> : <CustomRoutes />}
+      </div>
+    </GlobalProvider>
+  );
+}
+
+function CustomRoutes() {
+  return (
+    <div>
+      <Routes>
+        <Route path="/" element={<Task />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </div>
   );
 }
 

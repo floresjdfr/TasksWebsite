@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { Form, Button, Modal } from "react-bootstrap";
-import axios from "axios";
 import { TaskContext } from "../../Pages/Task";
 import { getTasks, postTask } from "../../api/tasksApi";
 import { GlobalContext } from "../../contexts/GlobalContext";

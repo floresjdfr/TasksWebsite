@@ -1,20 +1,9 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Button } from "react-bootstrap";
-import { useContext } from "react";
-import { GlobalContext } from "../../contexts/GlobalContext";
-import { useAuth0 } from "@auth0/auth0-react";
+import AuthenticationButton from "../authentication/AuthenticationButton";
 
 function CustomNav() {
-  
-
-  const { loginWithRedirect } = useAuth0();
-
-  const handleOnLogin = () => {
-    loginWithRedirect();
-  };
-
   return (
     <>
       <Navbar bg="light" variant="light">
@@ -26,9 +15,7 @@ function CustomNav() {
             <Nav.Link href="/profile">Profile</Nav.Link>
           </Nav>
           <Nav className="ml-auto">
-            <Button variant="primary" onClick={handleOnLogin}>
-              Login
-            </Button>
+            <AuthenticationButton />
           </Nav>
         </Container>
       </Navbar>

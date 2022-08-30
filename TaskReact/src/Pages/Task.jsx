@@ -22,10 +22,8 @@ function Task() {
 
   return (
     <TaskContext.Provider value={[taskState, setTaskState]}>
-      <div className="container my-4">
-        <NewTask />
-        <TaskList />
-      </div>
+      <NewTask />
+      <TaskList />
     </TaskContext.Provider>
   );
 }
