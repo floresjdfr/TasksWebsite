@@ -10,10 +10,9 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using TasksAPI.Models;
 using TasksAPI.Repositories;
 using Microsoft.OpenApi.Models;
+using TasksAPI.Settings;
 
 namespace TasksAPI
 {
@@ -34,12 +33,15 @@ namespace TasksAPI
             {
                 options.AddPolicy(name: AllowSpecifications, policy =>
                 {
-                    policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
+                    policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
                 });
             });
-            services.Configure<TasksDatabaseSettings>(Configuration.GetSection(nameof(TasksDatabaseSettings)));
-            services.AddSingleton<IDatabaseSettings>(item => item.GetRequiredService<IOptions<TasksDatabaseSettings>>().Value);
+            services.Configure<ExampleDBSettings>(Configuration.GetSection(nameof(ExampleDBSettings)));
+            services.AddSingleton<IDatabaseSettings>(item => item.GetRequiredService<IOptions<ExampleDBSettings>>().Value);
+
             services.AddSingleton<TaskRepository>();
+            services.AddSingleton<UserRepository>();
+            
             services.AddControllers();
             services.AddSwaggerGen();
 

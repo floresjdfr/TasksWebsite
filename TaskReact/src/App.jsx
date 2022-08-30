@@ -8,14 +8,14 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import GlobalProvider, { GlobalContext } from "./contexts/GlobalContext";
 import About from "./Pages/About";
 import Task from "./Pages/Task";
-import ProfileInformation from "./Pages/ProfileInformation";
+import ProfileInformation from "./Pages/Profile";
 
 function App() {
   return (
     <Router>
       <Auth0Provider
         domain="dev-x89v66tk.us.auth0.com"
-        clientId="U1u4Hx1LAyimGh1nZzPd1wPUK9QmUW5H"
+        clientId="WT7aAlguqhHjOyidU6PUAFt5tztJAWL5"
         redirectUri={document.location.origin}
       >
         <GlobalProvider>

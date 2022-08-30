@@ -12,17 +12,7 @@ function ProfileInformation() {
   return (
     <>
       <Container className="mt-3">
-        <h2>Profile information</h2>
-        <Form>
-          <Form.Group>
-            <Form.Label>Name</Form.Label>
-            <Form.Control disabled={true} type="text" value={user.name } />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Email</Form.Label>
-            <Form.Control disabled={true} type="text" value={user.email } />
-          </Form.Group>
-        </Form>
+        <h2>Still under implementation...</h2>
       </Container>
     </>
   );

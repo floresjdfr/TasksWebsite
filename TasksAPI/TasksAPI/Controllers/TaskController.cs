@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using TasksAPI.DTOs;
 using TasksAPI.Repositories;
-using TaskModel = TasksAPI.Models.Task;
 using TasksAPI.Extensions;
+using TasksAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,7 +15,7 @@ namespace TasksAPI.Controllers
     [ApiController]
     public class TaskController : ControllerBase
     {
-        private readonly TaskRepository _taskRepository;
+        private readonly IRepository<Task> _taskRepository;
 
         public TaskController(TaskRepository taskService)
         {
@@ -24,7 +24,7 @@ namespace TasksAPI.Controllers
 
         // GET: api/<TaskController>
         [HttpGet]
-        public IEnumerable<TaskDTO> Get() => _taskRepository.Get().Select(task => task.toDTO());
+        public IEnumerable<TaskDTO> Get() => _taskRepository.Get().Select(task => (task as Task).toDTO());
 
         // GET api/<TaskController>/5
         [HttpGet("{id}")]
@@ -35,14 +35,14 @@ namespace TasksAPI.Controllers
             if (item is null)
                 return NotFound();
             else
-                return item.toDTO();
+                return (item as Task).toDTO();
         }
 
         // POST api/<TaskController>
         [HttpPost]
         public ActionResult<TaskDTO> Post([FromBody] TaskDTO value)
         {
-            var createdValue = _taskRepository.Create(value.toTask());
+            var createdValue = _taskRepository.Create(value.toTask()) as Task;
             return CreatedAtAction(nameof(Get), new { id = createdValue.Id.ToString() }, createdValue.toDTO());
         }
 
