@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { Auth0Provider } from '@auth0/auth0-react';
 
 const Auth0ProviderWithHistory = ({ children }) => {
-  const domain = "dev-x89v66tk.us.auth0.com";
-  const clientId = "WT7aAlguqhHjOyidU6PUAFt5tztJAWL5";
+  const domain = import.meta.env.VITE_DOMAIN;
+  const clientId = import.meta.env.VITE_CLIENT_ID;
   
   const navigate = useNavigate();
 
