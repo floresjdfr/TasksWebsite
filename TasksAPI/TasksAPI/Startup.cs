@@ -36,9 +36,12 @@ namespace TasksAPI
                     policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
                 });
             });
+            
+            //Maps appsettings.json into ExampleDBSettings
             services.Configure<ExampleDBSettings>(Configuration.GetSection(nameof(ExampleDBSettings)));
-            services.AddSingleton<IDatabaseSettings>(item => item.GetRequiredService<IOptions<ExampleDBSettings>>().Value);
 
+            //Adds implementations of interfaces to the Service Container to let .Net know how to resolve the Interfaces
+            services.AddSingleton<IDatabaseSettings>(item => item.GetRequiredService<IOptions<ExampleDBSettings>>().Value);
             services.AddSingleton<TaskRepository>();
             services.AddSingleton<UserRepository>();
             
